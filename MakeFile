@@ -1,0 +1,35 @@
+#
+# In order to execute this "Makefile" just type "make"
+#
+#
+
+OBJS 	= DcmMain.o DCM_READER.o SPECS.o DATA.o
+SOURCE	= DcmMain.cpp DCM_READER.cpp SPECS.cpp DATA.cpp 
+HEADER  = DCM_READER.h SPECS.h DATA.h
+OUT  	= loader
+CC	= g++
+LIBS    = -pthread -ldcmimgle -ldcmdata -loflog -lofstd
+FLAGS   = -g -c
+
+# -g option enables debugging mode 
+# -c flag generates object code for separate files
+
+all: $(OBJS)
+	$(CC) -g $(OBJS) $(LIBS) -o $(OUT) 
+
+# create/compile the individual files >>separately<< 
+DcmMain.o: DcmMain.cpp
+	$(CC) $(FLAGS) DcmMain.cpp
+
+DCM_READER.o: DCM_READER.cpp
+	$(CC) $(FLAGS) DCM_READER.cpp
+
+SPECS.o: SPECS.cpp
+	$(CC) $(FLAGS) SPECS.cpp
+
+DATA.o: DATA.cpp
+	$(CC) $(FLAGS) DATA.cpp
+
+# clean house
+clean:
+	rm -f $(OBJS) $(OUT)
